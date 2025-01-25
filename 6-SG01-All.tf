@@ -831,7 +831,56 @@ resource "aws_security_group" "tok_SL01-SG01-443" {
 
   tags = {
     Name    = "tok_SL01-SG01-443"
-    Service = "application1"
+    Service = "syslog"
+    Owner   = "Blackneto"
+    Planet  = "Taa"
+  }
+}
+
+
+# TOKYO Port 443 Security Group for Database Server 443 - add ingress for 443
+resource "aws_security_group" "tok_DB01-SG01-443" {
+  #provider         = aws.tokyo
+  name        = "tok_DB01-SG01-443"
+  description = "tok_DB01-SG01-443"
+  vpc_id      = aws_vpc.TOKYO_VPC.id
+
+  ingress {
+    description = "MyHomePage"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Secure"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+   ingress {
+    description = "Secure"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name    = "tok_SL01-SG01-443"
+    Service = "database"
     Owner   = "Blackneto"
     Planet  = "Taa"
   }

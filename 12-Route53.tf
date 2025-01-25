@@ -16,14 +16,14 @@
 
 
 data "aws_route53_zone" "main-tokyo" {
-  #provider     = aws.california  
+   
   name         = "jastek.click"  # The domain name you want to look up
   private_zone = false
 }
 
 
 resource "aws_route53_record" "www-tokyo" {
-  #provider = aws.california
+  
   zone_id = data.aws_route53_zone.main-tokyo.zone_id
   name    = "jastek.click"
   type    = "A"

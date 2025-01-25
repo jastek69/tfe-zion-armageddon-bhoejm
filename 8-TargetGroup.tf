@@ -374,7 +374,7 @@ resource "aws_lb_target_group" "tok_lb_tg80" {
   }
 }
 
-
+# TOKYO TARGET GROUPS for LOAD BALANCER
 resource "aws_lb_target_group" "tok_lb_tg443" {
   #provider = aws.tokyo
   name     = "tok-lb-tg443"
@@ -397,6 +397,35 @@ resource "aws_lb_target_group" "tok_lb_tg443" {
   tags = {
     Name    = "tok-lb-TargetGroup443"
     Service = "LoadBalancer"
+    Owner   = "User"
+    Project = "TMMC"
+  }
+}
+
+
+# TOKYO TARGET GROUP for DATABASE
+resource "aws_lb_target_group" "tok_db_tg443" {
+  #provider = aws.tokyo
+  name     = "tok-db-tg443"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.TOKYO_VPC.id
+  target_type = "instance"
+
+  health_check {
+    enabled             = true
+    interval            = 30
+    path                = "/"
+    protocol            = "HTTP"
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+    timeout             = 5
+    matcher             = "200"
+  }
+
+  tags = {
+    Name    = "tok-db-TargetGroup443"
+    Service = "Database"
     Owner   = "User"
     Project = "TMMC"
   }

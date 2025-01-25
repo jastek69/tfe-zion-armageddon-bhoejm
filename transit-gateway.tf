@@ -1,4 +1,5 @@
 
+# TOKYO Transit Gateway - MAIN
 resource "aws_ec2_transit_gateway" "tokyo-tgw" {
   description = "tg-tokyo-database"
   auto_accept_shared_attachments = "enable"
@@ -7,7 +8,7 @@ resource "aws_ec2_transit_gateway" "tokyo-tgw" {
   }
 }
 
-
+# LONDON Transit Gateway
 resource "aws_ec2_transit_gateway" "london-tgw" {
   provider = aws.london
   description = "tg-london-database"
@@ -17,7 +18,7 @@ resource "aws_ec2_transit_gateway" "london-tgw" {
   }
 }
 
-
+# Sao Paulo Transit Gateway
 resource "aws_ec2_transit_gateway" "sao-tgw" {
   provider = aws.saopaulo
   description = "tg-sao-database"
@@ -27,7 +28,7 @@ resource "aws_ec2_transit_gateway" "sao-tgw" {
   }
 }
 
-
+# California Transit Gateway
 resource "aws_ec2_transit_gateway" "ca-tgw" {
   provider = aws.california
   description = "tg-ca-database"

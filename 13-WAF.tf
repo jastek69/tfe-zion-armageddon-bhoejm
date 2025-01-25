@@ -148,7 +148,7 @@ resource "aws_wafv2_web_acl" "tok_waf_acl" {
   }
   visibility_config {
     cloudwatch_metrics_enabled = false
-    metric_name                = "ca_WebACL"
+    metric_name                = "tok_WebACL"
     sampled_requests_enabled   = false
   }
   tags = {

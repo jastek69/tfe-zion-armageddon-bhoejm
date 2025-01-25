@@ -1,4 +1,4 @@
-/*
+
 terraform {
     backend "s3" {
         bucket = "jasopstokyo"
@@ -6,4 +6,4 @@ terraform {
         region = "ap-northeast-1"      
 }
 }
-*/
+

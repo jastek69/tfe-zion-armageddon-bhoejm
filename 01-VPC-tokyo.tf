@@ -63,21 +63,40 @@ resource "aws_subnet" "tokyo-private-ap-northeast-1a" {
   }
 }
 
-
+# Syslog Server
 resource "aws_subnet" "tokyo-private-ap-northeast-1c" {
   vpc_id            = aws_vpc.TOKYO_VPC.id
-  cidr_block        = "10.240.13.0/24"
+  cidr_block        = "10.240.43.0/24"
   availability_zone = "ap-northeast-1c"
 
   tags = {
     Name    = "tokyo-private-ap-northeast-1c"
-    Service = "application1"
+    Service = "syslog"
     Owner   = "Balactus"
     Planet  = "Taa"
   }
 }
 
 
+
+#Database Server - Aurora MySQL
+resource "aws_subnet" "tokyo-private-ap-northeast-1d" {
+  vpc_id            = aws_vpc.TOKYO_VPC.id
+  cidr_block        = "10.240.54.0/24"
+  availability_zone = "ap-northeast-1d"
+
+  tags = {
+    Name    = "tokyo-private-ap-northeast-1d"
+    Service = "database"
+    Owner   = "Balactus"
+    Planet  = "Taa"
+  }
+}
+
+
+
+
+# TOKYO IGW
 resource "aws_internet_gateway" "TOKYO_IGW" {     # Internet Gateway ID: aws_internet_gateway.TOKYO_IGW.id
   vpc_id     = aws_vpc.TOKYO_VPC.id
 
@@ -151,6 +170,36 @@ resource "aws_route" "TOKYO_to_california" {
   route_table_id         = aws_route_table.TOKYO_route_table.id
   destination_cidr_block = "10.244.0.0/16"  # California CIDR block
   transit_gateway_id     = aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment.transit_gateway_id
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment]
+}
+
+
+# Route to Hong Kong VPC via Transit Gateway Attachment
+resource "aws_route" "TOKYO_to_hongkong" {
+  route_table_id         = aws_route_table.TOKYO_route_table.id
+  destination_cidr_block = "10.245.0.0/16"  # Hong Kong CIDR block
+  transit_gateway_id     = aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment.transit_gateway_id 
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment]
+}
+
+
+# Route to NY_VPC via Transit Gateway Attachment
+resource "aws_route" "TOKYO_to_ny" {
+  route_table_id         = aws_route_table.TOKYO_route_table.id
+  destination_cidr_block = "10.246.0.0/16"  # New York CIDR block
+  transit_gateway_id     = aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment.transit_gateway_id 
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment]
+}
+
+
+# Route to Australia VPC via Transit Gateway Attachment
+resource "aws_route" "TOKYO_to_australia" {
+  route_table_id         = aws_route_table.TOKYO_route_table.id
+  destination_cidr_block = "10.247.0.0/16"  # Australia CIDR block
+  transit_gateway_id     = aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment.transit_gateway_id 
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.tokyo_attachment]
 }

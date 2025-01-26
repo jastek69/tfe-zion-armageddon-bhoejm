@@ -182,7 +182,6 @@ addresses = [
 
 
 resource "aws_wafv2_web_acl_association" "tok_waf_alb_association" {
-  #provider    = aws.california
   resource_arn = aws_lb.tok_lb01.arn
   web_acl_arn  = aws_wafv2_web_acl.tok_waf_acl.arn
 }

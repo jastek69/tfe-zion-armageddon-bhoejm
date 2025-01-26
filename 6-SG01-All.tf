@@ -192,6 +192,8 @@ resource "aws_security_group" "ec2-ny-sg80" {
 }
 
 
+
+# SAO PAULO Security Group
 resource "aws_security_group" "ec2-sao-sg80" {
   provider = aws.saopaulo
   
@@ -311,8 +313,6 @@ resource "aws_security_group" "aus-LB01-sg443" {
   }
 
 }
-
-
 
 
 
@@ -795,7 +795,6 @@ resource "aws_security_group" "sao_SL01-SG01-443" {
     Planet  = "Taa"
   }
 }
-
 
 
 

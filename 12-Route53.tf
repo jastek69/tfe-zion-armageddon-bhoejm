@@ -9,9 +9,6 @@
 # The zone_id of the domain is specified in the data block to associate the record with the correct zone.      
 # terraform import aws_route53_record.www Z0226086O3FCYG2A1C50.jastek.click    
 # hosted Zone ID: 
-# Z0226086O3FCYG2A1C50
-#
-#
 
 
 

@@ -1,10 +1,10 @@
+# AWS Transit Gateway Inter-Region peering
 # Transit Gateway Attachment
 # Creating attachments for each VPC to Tokyo Transit Gateway
 # Creating Peering Connection for inter-region peering connections to Tokyo Transit Gateway
 ################################################################################################
 
 # TRANSIT GATEWAY ATTACHMENTS
-
 
 
 # Attach TOKYO_VPC to the Transit Gateway
@@ -22,6 +22,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tokyo_attachment" {
     Name = "Tokyo VPC Attachment"
   }
 }
+
 
 # Attach LONDON VPC to the Transit Gateway
 resource "aws_ec2_transit_gateway_vpc_attachment" "london_attachment" {
@@ -140,7 +141,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "aus_attachment" {
 
 ###############################################################################################
 # PEERING ATTACHMENTS
-# 1 - Resource - Create the intra-region Peering Attachment from Tokyo to London.
+# 1 - Resource - Create the inter-region Peering Attachment from Tokyo to London.
 # The peer_transit_gateway_id must reference a Transit Gateway from a different region,
 # and the peer_region must align with the region of the peer_transit_gateway_id.
 # tgw_tokyo_source_peering: peer_region = "eu-west-2" should match the region of the london-tgw.
@@ -156,8 +157,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "aus_attachment" {
 resource "aws_ec2_transit_gateway_peering_attachment" "tgw_tokyo_source_peering" {
   transit_gateway_id = aws_ec2_transit_gateway.tokyo-tgw.id # TOKYO Transit Gateway ID
   peer_transit_gateway_id = aws_ec2_transit_gateway.london-tgw.id # London Transit Gateway ID to Peer WITH
-  peer_region = "eu-west-2"  # London region to Peer WITH
-  
+  peer_region = "eu-west-2"  # London region to Peer WITH  
 
   tags = {
     Name = "Tokyo London Peering Attachment"

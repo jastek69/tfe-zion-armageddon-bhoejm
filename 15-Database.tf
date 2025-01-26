@@ -1,3 +1,5 @@
+# Creating RDS Aurora Cluster in Tokyo region in private subnets 1A and 1D
+
 resource "aws_kms_key" "example" {
   description = "Example KMS Key"
 }
@@ -25,19 +27,19 @@ resource "aws_rds_cluster_instance" "tokyo_rds_cluster_instances" {
 
 
 resource "aws_rds_cluster" "tokyo_rds_cluster" {
-  cluster_identifier = "aurora-cluster"
-  availability_zones = ["ap-northeast-1a", "ap-northeast-1d"]
-  db_subnet_group_name = aws_db_subnet_group.tokyo_private_subnet_group.name
+  cluster_identifier                = "aurora-cluster"
+  availability_zones                = ["ap-northeast-1a", "ap-northeast-1d"]
+  db_subnet_group_name              = aws_db_subnet_group.tokyo_private_subnet_group.name
   # db_subnet_group_name = "tokyo_private_subnet_group" 
-  database_name      = "tokyodb"
-  engine             = "aurora-mysql"
-  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
-  master_username    = "admin"
-  master_password    = "admintest"
+  database_name                     = "tokyodb"
+  engine                            = "aurora-mysql"
+  enabled_cloudwatch_logs_exports   = ["audit", "error", "general", "slowquery"]
+  master_username                   = "admin"
+  master_password                   = "admintest"
   #manage_master_user_password   = true
   #master_user_secret_kms_key_id = aws_kms_key.ceb68900-d7b0-4e4b-802f-601682f270be.key_id
-  skip_final_snapshot       = true
-  vpc_security_group_ids = [aws_security_group.tok_DB01-SG01-443.id]
+  skip_final_snapshot               = true
+  vpc_security_group_ids            = [aws_security_group.tok_DB01-SG01-443.id]
 }
 
 
@@ -57,12 +59,3 @@ resource "aws_db_instance" "tokyo_db_instance" {
 }
 */
 
-
-/*
-ERROR
- on 15-Database.tf line 11, in resource "aws_rds_cluster" "default":
-│   11: resource "aws_rds_cluster" "default" {
-│
-│ The argument "engine" is required, but no definition was found.
-╵
-*/

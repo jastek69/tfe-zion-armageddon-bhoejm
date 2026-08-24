@@ -1,105 +1,67 @@
-# The default provider configuration; resources that begin with `aws_` will use
-# it as the default, and it can be referenced as `aws`.
-# Tokyo - HQ region
-
-
-# Tokyo is Default Region
+# Tokyo is the default region.
 provider "aws" {
-  region = "ap-northeast-1"
+  region = local.sites.tokyo.region
 }
 
-
-
-# Australia - Additional provider configuration for Asia Pacific region
-# reference this as `aws.australia`.
 provider "aws" {
   alias  = "australia"
-  region = "ap-southeast-2"
+  region = local.sites.australia.region
 }
 
-
-# California - additional provider configuration for Asia Pacific region
-# reference this as `aws.california`.
 provider "aws" {
   alias  = "california"
-  region = "us-west-1"
+  region = local.sites.california.region
 }
 
-
-# Hong Kong - additional provider configuration for Asia Pacific region
-# reference this as `aws.hongkong`.
 provider "aws" {
   alias  = "hongkong"
-  region = "ap-east-1"
+  region = local.sites.hongkong.region
 }
 
-
-# London - additional provider configuration for Asia Pacific region
-# reference this as `aws.london`.
 provider "aws" {
   alias  = "london"
-  region = "eu-west-2"
+  region = local.sites.london.region
 }
 
-
-# New York (Virginia)- additional provider configuration for Asia Pacific region
-# reference this as `aws.ny`.
 provider "aws" {
   alias  = "newyork"
-  region = "us-east-1"
+  region = local.sites.newyork.region
 }
 
-
-# Sao Paulo - additional provider configuration for Asia Pacific region
-# reference this as `aws.london`.
 provider "aws" {
   alias  = "saopaulo"
-  region = "sa-east-1"
+  region = local.sites.saopaulo.region
 }
 
-
-# Cloudwatch Requirement for us-east-1
+# CloudWatch and WAF resources that must live in us-east-1.
 provider "aws" {
   alias  = "us-east-1"
   region = "us-east-1"
 }
 
-
-/*
-provider "aws" {
-  region = "local.region"
-}
-
-locals {
-  name   = "ex-tgw-${replace(basename(path.cwd), "_", "-")}"
-  region = "ap-northeast-1a"
-
-  tags = {
-    Example    = local.name
-    GithubRepo = "terraform-aws-eks"
-    GithubOrg  = "terraform-aws-transit-gateway"
-  }
-}
-*/
-
-
-
-
-# Providers - terraform
 terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.46.0" 
+      version = "~> 5.46.0"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
     }
   }
-  /* cloud  { 
-    
-    organization = "BHoEjM" 
 
-    workspaces { 
-      name = "zion-armageddon-bhoejm" 
-    } */ 
-  } 
-/* } */
-
+  backend "s3" {
+    bucket = "taaops-terraform-state-tokyo"
+    key    = "MyLinuxBox"
+    region = "ap-northeast-1"
+  }
+}

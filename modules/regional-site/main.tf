@@ -80,7 +80,7 @@ locals {
 
   syslog_user_data = (
     local.syslog_db_enabled ? base64encode(templatefile(var.syslog_storage_user_data_template, {
-      headline_line1 = "Keisha threat detected ... Syslog Storage Deployed"
+      headline_line1 = "Security zone active ... Syslog Storage Deployed"
       headline_line2 = "${var.display_name} writing syslog to Japan Aurora"
       db_endpoint    = var.syslog_db_endpoint
       db_secret_arn  = var.syslog_db_secret_arn
@@ -88,13 +88,13 @@ locals {
       db_username    = var.syslog_db_username
     })) :
     local.syslog_forwarder_enabled ? base64encode(templatefile(var.syslog_forwarder_user_data_template, {
-      headline_line1        = "Keisha threat detected ... Syslog Forwarder Deployed"
+      headline_line1        = "Security zone active ... Syslog Forwarder Deployed"
       headline_line2        = "${var.display_name} forwarding syslog to Japan over TGW"
       display_name          = var.display_name
       tokyo_syslog_endpoint = var.tokyo_syslog_endpoint
     })) :
     base64encode(templatefile(var.user_data_template, {
-      headline_line1 = var.syslog_mode == "storage" ? "Keisha threat detected ... Syslog Storage Deployed" : "Keisha threat detected ... Syslog Forwarder Deployed"
+      headline_line1 = var.syslog_mode == "storage" ? "Security zone active ... Syslog Storage Deployed" : "Security zone active ... Syslog Forwarder Deployed"
       headline_line2 = "${var.display_name} private security zone is active"
     }))
   )
@@ -218,7 +218,7 @@ resource "aws_launch_template" "app" {
 
   user_data = base64encode(templatefile(var.user_data_template, {
     headline_line1 = "Balactus has Arrived in ${var.display_name}"
-    headline_line2 = "Keisha World has been consumed"
+    headline_line2 = "Regional app tier online"
   }))
 
   tag_specifications {

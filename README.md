@@ -138,6 +138,10 @@ Nothing sensitive is intended to be stored outside Japan. VPN is not used for cr
 |---|---|
 | `README.md` | Project overview, architecture, security model |
 | `docs/RUNBOOK.md` | Deploy, verify (geo DNS, ALBs, syslog→Aurora), teardown, common failures |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Mermaid diagrams: geo DNS public path, TGW syslog path, module structure, PLG observability |
+| [`docs/TESTING.md`](docs/TESTING.md) | Static checks, the 12 scripted post-apply checks, manual runbook verification, known gaps |
+| [`SECURITY.md`](SECURITY.md) | Vulnerability reporting, layer-by-layer security model, secrets, public-repo hygiene |
+| [`.github/workflows/validate.yml`](.github/workflows/validate.yml) | CI: `terraform fmt -check`, `validate` (no backend), script syntax |
 | `test/verify.sh` | Bash verification suite (ALB, HTTPS blocked, RDS, Secrets, SSM) |
 | `test/verify.py` | Python verification suite (same checks via boto3) |
 
